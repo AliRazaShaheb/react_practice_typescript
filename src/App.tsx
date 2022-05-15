@@ -1,5 +1,6 @@
 import "./styles.css";
 import ApiCalls from "./components/api-calls";
+import FriendsBill from "./components/friendsBill";
 
 export default function App() {
   return (
@@ -13,7 +14,8 @@ export default function App() {
         <Multiplication num1={10} num2={10} />
         <Division num1={100} num2={10} /> */}
         {/* <NumberTableComp num={10} /> */}
-        <ApiCalls />
+        {/* <ApiCalls /> */}
+        <FriendsBill />
       </div>
     </div>
   );

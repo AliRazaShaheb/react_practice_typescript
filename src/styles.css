@@ -2,3 +2,82 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#customers tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+  background-color: #ddd;
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #1b362c;
+  color: white;
+}
+.billofFriends {
+  display: flex;
+  flex-direction: column;
+  background-color: #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.billofFriends input {
+  height: 1.5rem;
+  border: none;
+  outline: none;
+  background: rgb(109, 138, 109);
+  color: white;
+  border-radius: 4px;
+  padding: 2px;
+  padding-left: 6px;
+}
+.billofFriends > * {
+  margin-bottom: 1rem;
+}
+.particulars {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.particulars > * {
+  margin-bottom: 0.5rem;
+}
+.particulars label {
+  margin-right: 1rem;
+}
+.particulars button {
+  padding: 0.2rem 1rem;
+  margin-left: 1rem;
+  border: none;
+  outline: none;
+  background-color: green;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+.particulars button:hover {
+  background-color: yellowgreen;
+}
+
+input[type="number"] {
+  width: 4rem;
+}
