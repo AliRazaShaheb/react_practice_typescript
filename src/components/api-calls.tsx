@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const baseURL = "https://jsonplaceholder.typicode.com";
 const endPoints = {
@@ -6,12 +6,13 @@ const endPoints = {
 };
 
 const ApiCalls = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const [newPost, setNewPost] = useState({
     userID: "",
     title: "",
     body: ""
   });
+  console.log(newPost);
   const updateList = async () => {
     const res = await fetch(`${baseURL}/${endPoints.POSTS}`);
     const json = await res.json();
@@ -32,11 +33,19 @@ const ApiCalls = () => {
         }
       })
         .then((res) => res.json())
-        .then((result) => console.log(result));
+        .then((result) => setData((prev) => [...prev, result]));
       updateList();
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewPost({
+      ...newPost,
+      [name]: value
+    });
   };
 
   return (
@@ -54,31 +63,13 @@ const ApiCalls = () => {
       <div>
         <form action="#">
           <div>
-            <input
-              type="text"
-              placeholder="userID"
-              onChange={(e) =>
-                setNewPost((prev) => ({ ...prev, userID: e.target.value }))
-              }
-            />
+            <input type="text" placeholder="userID" onChange={handleChange} />
           </div>
           <div>
-            <input
-              type="text"
-              placeholder="title"
-              onChange={(e) =>
-                setNewPost((prev) => ({ ...prev, title: e.target.value }))
-              }
-            />
+            <input type="text" placeholder="title" onChange={handleChange} />
           </div>
           <div>
-            <input
-              type="text"
-              placeholder="body"
-              onChange={(e) =>
-                setNewPost((prev) => ({ ...prev, body: e.target.value }))
-              }
-            />
+            <input type="text" placeholder="body" onChange={handleChange} />
           </div>
           <button onClick={(e) => newPostHandle(e)}>Create New Post</button>
         </form>
