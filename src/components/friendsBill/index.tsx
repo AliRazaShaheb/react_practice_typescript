@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const FriendsBill = () => {
-  const [bill, setBill] = useState({
-    faluda: 500,
-    coffee: 300,
-    lunch: 700
+  const [bill, setBill] = useState<{}[]>([]);
+
+  useEffect(() => {
+    const prevSavedData = JSON.parse(localStorage.getItem("billData") || "[]");
+    setBill((prev) => {
+      return [...prev, prevSavedData];
+    });
+  }, []);
+
+  const [itemInput, setItemInput] = useState({
+    particulars: "",
+    price: ""
   });
   const numberOfFriends = 5;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     let value = e.target.value;
-    setBill((prev) => ({
+    setItemInput((prev) => ({
       ...prev,
       [name]: value
     }));
+    localStorage.setItem("billData", JSON.stringify(itemInput));
+  };
+
+  const addItemHandle = () => {
+    setBill((prev) => {
+      return [...prev, itemInput];
+    });
   };
 
   return (
@@ -31,8 +46,8 @@ const FriendsBill = () => {
               <label htmlFor="bill_friend">Particulars : </label>
               <input
                 type="text"
+                value={itemInput.particulars}
                 name="particulars"
-                id=""
                 onChange={handleInputChange}
               />
             </div>
@@ -42,14 +57,16 @@ const FriendsBill = () => {
               <input
                 type="number"
                 name="price"
-                id=""
+                value={itemInput.price}
                 onChange={handleInputChange}
               />
             </div>
-            <button>Add</button>
+
+            <button onClick={addItemHandle}>Add</button>
           </div>
         </div>
       </div>
+
       <BillApp bill={bill} numberOfFriends={numberOfFriends} />
     </div>
   );
@@ -58,7 +75,10 @@ const FriendsBill = () => {
 export default FriendsBill;
 
 interface BillAppType {
-  bill: object;
+  bill: {
+    particulars: string;
+    price: any;
+  }[];
   numberOfFriends: number;
 }
 
@@ -74,17 +94,17 @@ export const BillApp = ({ bill, numberOfFriends }: BillAppType) => {
             <th>Bill Each Person</th>
           </tr>
         </thead>
-        <tbody>
-          {Object.keys(bill).map((objKey: string) => {
-            return (
-              <tr key={objKey}>
-                <td>{objKey}</td>
-                <td>{bill[objKey]}</td>
-                <td>{bill[objKey] / numberOfFriends}</td>
+        {bill.map((item, idx) => {
+          return (
+            <tbody key={idx}>
+              <tr>
+                <td>{item.particulars}</td>
+                <td>{item.price}</td>
+                <td>{item.price && item.price / numberOfFriends}</td>
               </tr>
-            );
-          })}
-        </tbody>
+            </tbody>
+          );
+        })}
       </table>
     </div>
   );
