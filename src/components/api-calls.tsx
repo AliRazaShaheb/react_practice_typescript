@@ -63,13 +63,28 @@ const ApiCalls = () => {
       <div>
         <form action="#">
           <div>
-            <input type="text" placeholder="userID" onChange={handleChange} />
+            <input
+              type="text"
+              placeholder="userID"
+              name="userID"
+              onChange={handleChange}
+            />
           </div>
           <div>
-            <input type="text" placeholder="title" onChange={handleChange} />
+            <input
+              type="text"
+              placeholder="title"
+              name="title"
+              onChange={handleChange}
+            />
           </div>
           <div>
-            <input type="text" placeholder="body" onChange={handleChange} />
+            <input
+              type="text"
+              placeholder="body"
+              name="body"
+              onChange={handleChange}
+            />
           </div>
           <button onClick={(e) => newPostHandle(e)}>Create New Post</button>
         </form>
