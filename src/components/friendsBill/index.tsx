@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const FriendsBill = () => {
-  const [bill, setBill] = useState<{}[]>([]);
+type Obj = {
+  particulars: string;
+  price: string;
+};
 
+const FriendsBill = () => {
+  const [bill, setBill] = useState<Obj[]>([]);
   useEffect(() => {
     const prevSavedData = JSON.parse(localStorage.getItem("billData") || "[]");
     setBill((prev) => {
@@ -29,6 +33,10 @@ const FriendsBill = () => {
   const addItemHandle = () => {
     setBill((prev) => {
       return [...prev, itemInput];
+    });
+    setItemInput({
+      particulars: "",
+      price: ""
     });
   };
 
@@ -83,6 +91,18 @@ interface BillAppType {
 }
 
 export const BillApp = ({ bill, numberOfFriends }: BillAppType) => {
+  const btnStyle = {
+    cursor: "pointer",
+    backgroundColor: "teal",
+    color: "white",
+    border: "none",
+    outline: "none",
+    padding: "0.2rem 0.5rem",
+    borderRadius: "3px",
+    "&:hover": {
+      backgroundColor: "blue"
+    }
+  };
   return (
     <div>
       TOTAL FRIENDS : {numberOfFriends}
@@ -100,7 +120,24 @@ export const BillApp = ({ bill, numberOfFriends }: BillAppType) => {
               <tr>
                 <td>{item.particulars}</td>
                 <td>{item.price}</td>
-                <td>{item.price && item.price / numberOfFriends}</td>
+                <td
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  {item.price && item.price / numberOfFriends}
+                  <span
+                    style={{
+                      display: "flex",
+                      gap: "0.5rem"
+                    }}
+                  >
+                    <button style={btnStyle}>edit</button>
+                    <button style={btnStyle}>delete</button>
+                  </span>
+                </td>
               </tr>
             </tbody>
           );
